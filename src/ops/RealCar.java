@@ -4,7 +4,7 @@ import dat.ICard;
 import ops.dao.CardReader_Operations;
 import ops.dao.Park_Operations;
 
-public class RealCar extends EventDriver.Car{
+public class RealCar extends EventDriver.RCar{
 	
 	public static final int CURRENT_STATUS_WAITING			= 0;
 	public static final int CURRENT_STATUS_GOING_TO_PARK	= 1;
@@ -19,7 +19,7 @@ public class RealCar extends EventDriver.Car{
 	private Park_Operations p_op;
 	private CardReader_Operations c_op;
 	
-	@Override
+/*	@Override
 	public int run(Param param) {
 		// TODO Auto-generated method stub
 		
@@ -28,9 +28,22 @@ public class RealCar extends EventDriver.Car{
 			//执行进入停车场操作。
 			current_status=CURRENT_STATUS_GOING_TO_PARK;
 			return EventDriver.STATUS_READY;
+		case CURRENT_STATUS_GOING_TO_PARK:
+			//执行查找车位操作。
+			
+			 * 
+			 
+			current_status=CURRENT_STATUS_PARKING;
+			return EventDriver.STATUS_READY;
+		case CURRENT_STATUS_PARKING:
+			
+			 * 走到出口。需要避让。
+			 
+		case CURRENT_STATUS_LEAVING:
+			
 		}
 		return 0;
-	}
+	}*/
 	
 	
 }

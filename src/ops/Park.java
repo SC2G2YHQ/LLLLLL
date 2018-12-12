@@ -3,8 +3,10 @@ package ops;
 import java.util.HashSet;
 
 import dat.Token;
+import ops.dao.CardReader_Operations;
+import ops.dao.Park_Operations;
 
-public class Park {
+public class Park implements Park_Operations{
 	private String Name;
 	private long id;
 	
@@ -21,11 +23,75 @@ public class Park {
 	
 	private ops.EventDriver event_driver;//Park的代码也是由Event Driver调度的。所以event_driver应该是由param传进。
 	
-	private int left[];
-	private int right[];
-	private int path[];
+	/*
+	 * 停车位和行车道也可以单独成类。
+	 * Path比停车位多了2个车位宽度。
+	 * 
+	 */
+	
+	private boolean left[];
+	private boolean right[];
+	private boolean path[];
 
-	public void init(){}
+	public void init(){
+		
+		
+	}
+
+	@Override
+	public int lockPark(int location, Token token) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int releasePark(int location, Token token) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int lockPath(int location) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int releasePath(int location) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int queryEmptyParkCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Token requestToken() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int leave() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public CardReader_Operations getInCardReader() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CardReader_Operations getOutCardReader() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 	
 }

@@ -3,6 +3,9 @@ package ops;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+/*
+ * 要想实现争用调度 必须用优先级
+ */
 
 public abstract class EventDriver {
 	
@@ -20,6 +23,11 @@ public abstract class EventDriver {
 	public static final int OPCODE_ADD		= 3;
 	public static final int OPCODE_REMOVE	= 4;
 	
+	/*
+	 * 该类名字是汽车，实际是通用线程接口
+	 * 最初将名字定为了Car
+	 */
+	
 	public static abstract class Car{
 		int ID;
 		int status;
@@ -35,8 +43,66 @@ public abstract class EventDriver {
 		
 		public abstract int run(Param param);
 	}
+	
+	
+	/*
+	 * 汽车不再是通用线程，有自己特定的回调函数集。
+	 */
+	public static abstract class RCar{
+		/*
+		 * 6种状态码分别对应为
+		 * 0.入场排队
+		 * 1.在行车道上寻找车位
+		 * 2.停车中
+		 * 3.在行车道上正在离开停车场
+		 * 4.离开失败，正在返回原车位或最近的车位
+		 * 5.僵死，离开失败并重新停在停车位之后的状态。
+		 * 
+		 * 这6种状态码为互斥码，所以简单的整数序列即可。
+		 * 4和5不一定出现。如果离开成功的话。
+		 * 
+		 * 调度器根据返回值确定汽车的状态。
+		 */
+		public static final int CAR_STATUS_WA	= 0;
+		public static final int CAR_STATUS_SE	= 1;
+		public static final int CAR_STATUS_PA	= 2;
+		public static final int CAR_STATUS_LE	= 3;
+		public static final int CAR_STATUS_RE	= 4;
+		public static final int CAR_STATUS_DE	= 5;
+		
+		int ID;
+		int status;
+		int time_wait_sec;
+
+		
+		public class Param{
+			int param;
+			EventDriver ed;
+		}
+		
+		public RCar(){this.status=CAR_STATUS_WA;}//生成的汽车初始为排队等待状态。
+		
+		public abstract int wa(Param param);
+		public abstract int se(Param param);
+		public abstract int pa(Param param);
+		public abstract int le(Param param);
+		public abstract int re(Param param);
+		public abstract int de(Param param);
+		
+	}
 
 
+	/*
+	 * 不同的队列。 包括：就绪、睡眠、时间等待。
+	 * 同一队列下也要有顺序。
+	 */
+	
+	private LinkedList<Car> se_cars;
+	private LinkedList<Car> pa_cars;
+	private LinkedList<Car> le_cars;
+	private LinkedList<Car> re_cars;
+	private LinkedList<Car> de_cars;
+	
 	private LinkedList<Car> cars;
 	
 	private int op_code;
@@ -213,6 +279,7 @@ public abstract class EventDriver {
 		this.op_car=car;
 		this.op_code=OPCODE_REMOVE;
 		return 0;
+		
 	}
 	
 	public int getCurrentCarID(){

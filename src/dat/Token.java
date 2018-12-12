@@ -6,5 +6,6 @@ package dat;
  * Park使用Token标识汽车。
  */
 public class Token {
-
+	int CarID;
+	int Handle;
 }
