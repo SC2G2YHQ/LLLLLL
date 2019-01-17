@@ -8,7 +8,7 @@ package ops.dao;
  */
 
 public interface Sensor_Operations {
-	int registerSensorProc(SensorProc sp);
+	int registerSensorProc(SensorProc sp,Park_Operations po,int location);
 	int unRegisterSensorProc(SensorProc sp);
 }
 

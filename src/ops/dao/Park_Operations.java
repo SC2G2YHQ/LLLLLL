@@ -11,8 +11,8 @@ public interface Park_Operations {
 	/*
 	 * 占用和释放车位需要凭证。
 	 */
-	public int lockPark(int location,Token token);
-	public int releasePark(int location,Token token);
+	public int lockPark(int line,int location,Token token);
+	public int releasePark(int line,int location,Token token);
 	
 	/*
 	 * 占用和释放车道理论上需要验证。
@@ -38,4 +38,8 @@ public interface Park_Operations {
 	public CardReader_Operations getInCardReader();
 	public CardReader_Operations getOutCardReader();
 	
+	public boolean get(int location);
+	public boolean getParkStatus(int line,int location);
+	public int getMaxPartCount();
+
 }

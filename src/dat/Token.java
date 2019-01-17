@@ -8,4 +8,13 @@ package dat;
 public class Token {
 	int CarID;
 	int Handle;
+	String ID;
+	
+	public boolean equals(Token t){
+		return t.CarID==this.CarID&&t.Handle==this.Handle;
+	}
+	
+	public Token(int CarID,int Handle){
+		this.CarID=CarID;this.Handle=Handle;
+	}
 }
